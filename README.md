@@ -331,4 +331,44 @@ This prrvie 📋 Overing.
 
 ##nd monitoement asource managts with renvironmenpment edevelostudent solated ploying iem for destbased synetes-Kuber
 A 
-d Deployertudent Po# 🚀 S
+
+## Environment variables
+
+The application requires the following environment variables. For local development, copy `.env.example` to `.env` and fill in real values. Never commit `.env` to the repository.
+
+### Required variables
+
+- MONGODB_URL
+  - Description: MongoDB connection string used by the app.
+  - Examples:
+    - Atlas: `mongodb+srv://<user>:<password>@cluster0.mongodb.net/<db_name>?retryWrites=true&w=majority`
+    - Local: `mongodb://<user>:<password>@localhost:27017/<db_name>`
+  - Note: Some setups include the database name in the URL; optionally also set `DB_NAME`.
+
+- DB_NAME
+  - Description: The name of the database to use (optional if included in `MONGODB_URL`).
+  - Example: `student_db`
+
+- STUDENT_POD_IMAGE
+  - Description: Container image used for the student pod.
+  - Example: `ghcr.io/your-org/student-pod:latest` or `docker.io/youruser/student-pod:1.0.0`
+
+- ADMIN_PASSWORD
+  - Description: Administrative password for the application. Use a strong password.
+  - Important: Treat this as a secret. Do not commit it to git.
+
+### Security and deployment notes
+
+- For local development:
+  - Copy `.env.example` to `.env` and fill values.
+  - Add `.env` to `.gitignore`.
+- For Kubernetes / production:
+  - Store secrets using Kubernetes Secrets (do not place plaintext secrets in manifests).
+  - Example:
+    ```bash
+    kubectl create secret generic student-app-secrets \
+      --from-literal=ADMIN_PASSWORD='your_strong_password' \
+      --from-literal=MONGODB_URL='your_mongo_connection_string' \
+      --from-literal=DB_NAME='student_db'
+    ```
+  - Reference those secrets from your Pod/Deployment environment variables.
