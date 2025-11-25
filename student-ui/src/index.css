@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Prevent overscroll bounce/white space when pulling down */
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Alternative: Set background to match your app */
+body {
+  background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 50%, #0f172a 100%);
+}
